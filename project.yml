@@ -1,0 +1,38 @@
+name: BahceBirlestir
+options:
+  bundleIdPrefix: com.kutican
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    GENERATE_INFOPLIST_FILE: true
+    INFOPLIST_KEY_UILaunchScreen_Generation: true
+    INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  BahceBirlestir:
+    type: application
+    platform: iOS
+    sources:
+      - path: BahceBirlestir
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kutican.bahcebirlestir
+        INFOPLIST_KEY_CFBundleDisplayName: "Bahçe Birleştir"
+    resources:
+      - path: BahceBirlestir/Resources
+  BahceBirlestirTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: BahceBirlestirTests
+    dependencies:
+      - target: BahceBirlestir
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kutican.bahcebirlestir.tests
