@@ -1,0 +1,5 @@
+İlk sürüm! Bahçe Birleştir'e hoş geldiniz.
+• 3 birleştirme zinciri: Zeytin, Domates, Çeşme
+• Sipariş panosu ile görevler
+• Game Center entegrasyonu
+• Mağaza içi satın alımlar

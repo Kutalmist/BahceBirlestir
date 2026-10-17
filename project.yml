@@ -14,6 +14,7 @@ settings:
     INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
     MARKETING_VERSION: "1.0.0"
     CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: "58545KNLXK"
 targets:
   BahceBirlestir:
     type: application
@@ -24,8 +25,14 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.kutican.bahcebirlestir
         INFOPLIST_KEY_CFBundleDisplayName: "Bahçe Birleştir"
+        INFOPLIST_KEY_NSUserTrackingUsageDescription: "Daha iyi reklam deneyimi için izleme izni istiyoruz."
+        CODE_SIGN_ENTITLEMENTS: BahceBirlestir/BahceBirlestir.entitlements
     resources:
       - path: BahceBirlestir/Resources
+    entitlements:
+      path: BahceBirlestir/BahceBirlestir.entitlements
+      properties:
+        com.apple.developer.game-center: true
   BahceBirlestirTests:
     type: bundle.unit-test
     platform: iOS

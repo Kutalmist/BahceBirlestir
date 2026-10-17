@@ -9,8 +9,13 @@ final class GameState {
     var maxEnergy: Int
     var gold: Int
     var orders: [Order]
+    var totalMerges: Int
     private var energyTimer: Timer?
     private var lastEnergyTime: Date
+
+    var gameCenterManager: GameCenterManager?
+    var storeManager: StoreManager?
+    var adManager: AdManager?
 
     private static let saveURL: URL = {
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -23,6 +28,7 @@ final class GameState {
         self.maxEnergy = 100
         self.gold = 50
         self.orders = []
+        self.totalMerges = 0
         self.lastEnergyTime = Date()
         load()
         generateOrdersIfNeeded()
@@ -36,6 +42,17 @@ final class GameState {
         energy -= amount
         save()
         return true
+    }
+
+    func addEnergy(_ amount: Int) {
+        energy = min(energy + amount, maxEnergy)
+        save()
+    }
+
+    func addGold(_ amount: Int) {
+        gold += amount
+        save()
+        reportGoldAchievements()
     }
 
     private func startEnergyTimer() {
@@ -81,6 +98,16 @@ final class GameState {
 
     func merge(from sourcePos: GridPosition, to targetPos: GridPosition) -> Bool {
         guard let result = board.merge(from: sourcePos, to: targetPos) else { return false }
+        totalMerges += 1
+
+        if totalMerges == 1 {
+            gameCenterManager?.reportAchievement(GameCenterManager.achievementFirstMerge)
+        }
+
+        checkMaxLevelAchievements(item: result)
+
+        gameCenterManager?.reportScore(totalMerges, leaderboardID: GameCenterManager.leaderboardMergesID)
+
         checkOrderDelivery(item: result)
         save()
         return true
@@ -90,6 +117,30 @@ final class GameState {
         let success = board.moveItem(from: from, to: to)
         if success { save() }
         return success
+    }
+
+    // MARK: - Achievements
+
+    private func checkMaxLevelAchievements(item: BoardItem) {
+        guard item.type.isMaxLevel else { return }
+        switch item.type.chain {
+        case .olive:
+            gameCenterManager?.reportAchievement(GameCenterManager.achievementOlive6)
+        case .tomato:
+            gameCenterManager?.reportAchievement(GameCenterManager.achievementTomato5)
+        case .fountain:
+            gameCenterManager?.reportAchievement(GameCenterManager.achievementFountain5)
+        }
+    }
+
+    private func reportGoldAchievements() {
+        if gold >= 100 {
+            gameCenterManager?.reportAchievement(GameCenterManager.achievement100Gold)
+        }
+        if gold >= 1000 {
+            gameCenterManager?.reportAchievement(GameCenterManager.achievement1000Gold)
+        }
+        gameCenterManager?.reportScore(gold, leaderboardID: GameCenterManager.leaderboardGoldID)
     }
 
     // MARK: - Orders
@@ -116,7 +167,7 @@ final class GameState {
     }
 
     private func checkOrderDelivery(item: BoardItem) {
-        // no-op here; delivery is explicit via deliverItem
+        // Delivery is explicit via deliverItem
     }
 
     func deliverItem(at pos: GridPosition, toOrder orderID: UUID) -> Bool {
@@ -135,6 +186,8 @@ final class GameState {
             gold += order.goldReward
             orders.remove(at: idx)
             generateOrdersIfNeeded()
+            reportGoldAchievements()
+            adManager?.onOrderCompleted()
         } else {
             orders[idx] = order
         }
@@ -151,6 +204,7 @@ final class GameState {
         var gold: Int
         var orders: [Order]
         var lastEnergyTime: Date
+        var totalMerges: Int
     }
 
     func save() {
@@ -161,7 +215,8 @@ final class GameState {
             maxEnergy: maxEnergy,
             gold: gold,
             orders: orders,
-            lastEnergyTime: lastEnergyTime
+            lastEnergyTime: lastEnergyTime,
+            totalMerges: totalMerges
         )
         do {
             let encoded = try JSONEncoder().encode(data)
@@ -178,6 +233,7 @@ final class GameState {
         self.gold = saved.gold
         self.orders = saved.orders
         self.lastEnergyTime = saved.lastEnergyTime
+        self.totalMerges = saved.totalMerges
         restoreOfflineEnergy()
     }
 }

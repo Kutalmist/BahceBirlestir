@@ -3,11 +3,16 @@ import SpriteKit
 
 struct ContentView: View {
     @Environment(GameState.self) private var gameState
+    @Environment(AdManager.self) private var adManager
+    @Environment(GameCenterManager.self) private var gameCenterManager
+    @Environment(StoreManager.self) private var storeManager
     @State private var scene: GameScene?
+    @State private var showStore = false
+    @State private var showSettings = false
 
     var body: some View {
         VStack(spacing: 0) {
-            TopBar()
+            TopBar(showStore: $showStore, showSettings: $showSettings)
 
             GeometryReader { geo in
                 if let scene {
@@ -27,24 +32,53 @@ struct ContentView: View {
 
             OrderPanelView()
                 .frame(height: 120)
+
+            if !adManager.isAdFree {
+                BannerAdView()
+            }
         }
         .ignoresSafeArea(edges: .bottom)
+        .sheet(isPresented: $showStore) {
+            StoreView()
+                .environment(storeManager)
+                .environment(gameState)
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+                .environment(gameCenterManager)
+        }
     }
 }
 
 struct TopBar: View {
     @Environment(GameState.self) private var gameState
+    @Binding var showStore: Bool
+    @Binding var showSettings: Bool
 
     var body: some View {
         HStack {
             Label("\(gameState.energy)/\(gameState.maxEnergy)", systemImage: "bolt.fill")
                 .foregroundStyle(.orange)
+
             Spacer()
+
             Text("Bahçe Birleştir")
                 .font(.headline)
+
             Spacer()
+
             Label("\(gameState.gold)", systemImage: "dollarsign.circle.fill")
                 .foregroundStyle(.yellow)
+
+            Button { showStore = true } label: {
+                Image(systemName: "cart.fill")
+                    .foregroundStyle(.blue)
+            }
+
+            Button { showSettings = true } label: {
+                Image(systemName: "gearshape.fill")
+                    .foregroundStyle(.secondary)
+            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

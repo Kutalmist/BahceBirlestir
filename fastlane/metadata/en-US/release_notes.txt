@@ -1,0 +1,5 @@
+First release! Welcome to Garden Merge.
+• 3 merge chains: Olive, Tomato, Fountain
+• Order board with missions
+• Game Center integration
+• In-app purchases
