@@ -17,3 +17,8 @@ Package.resolved
 
 # CocoaPods
 Pods/
+
+# Fastlane secrets
+fastlane/api_key.json
+fastlane/report.xml
+fastlane/README.md
