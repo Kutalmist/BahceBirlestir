@@ -43,3 +43,13 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.kutican.bahcebirlestir.tests
+  BahceBirlestirUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: BahceBirlestirUITests
+    dependencies:
+      - target: BahceBirlestir
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kutican.bahcebirlestir.uitests

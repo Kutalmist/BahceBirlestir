@@ -18,7 +18,18 @@ Package.resolved
 # CocoaPods
 Pods/
 
-# Fastlane secrets
+# Fastlane
 fastlane/api_key.json
 fastlane/report.xml
 fastlane/README.md
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# Build artifacts
+*.ipa
+*.dSYM.zip
+
+# Secrets
+*.p8
+AuthKey_*.p8

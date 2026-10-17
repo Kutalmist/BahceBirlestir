@@ -55,10 +55,11 @@ final class GameCenterManager {
     }
 }
 
-@MainActor
-final class GameCenterDismisser: NSObject, GKGameCenterControllerDelegate {
+final class GameCenterDismisser: NSObject, GKGameCenterControllerDelegate, @unchecked Sendable {
     static let shared = GameCenterDismisser()
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true)
+    nonisolated func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        DispatchQueue.main.async {
+            gameCenterViewController.dismiss(animated: true)
+        }
     }
 }

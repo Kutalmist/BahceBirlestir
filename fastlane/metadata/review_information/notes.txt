@@ -1,0 +1,1 @@
+No login required. The app is a merge puzzle game. Tap the seed button to generate items on the board, then drag and drop matching items to merge them. Complete orders to earn gold. In-app purchases are for energy, gold, and removing ads.

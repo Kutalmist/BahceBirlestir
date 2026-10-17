@@ -15,6 +15,10 @@ struct BahceBirlestirApp: App {
                 .environment(gameCenterManager)
                 .environment(storeManager)
                 .onAppear {
+                    if DemoMode.isActive {
+                        DemoDataProvider.applyDemoState(to: gameState)
+                    }
+
                     adManager.configure()
                     adManager.loadInterstitial()
                     gameCenterManager.authenticate()

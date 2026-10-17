@@ -1,0 +1,73 @@
+{
+  "default": {
+    "keyword": {
+      "color": "#FFFFFF",
+      "font_size": 48
+    },
+    "title": {
+      "color": "#FFFFFF",
+      "font_size": 36
+    },
+    "background": "#2d5016",
+    "padding": 50,
+    "show_complete_frame": true,
+    "title_below_image": false
+  },
+  "data": [
+    {
+      "filter": "01-AnaSayfa",
+      "keyword": {
+        "tr": "Bahçe Birleştir",
+        "en-US": "Garden Merge"
+      },
+      "title": {
+        "tr": "Kendi bahçeni oluştur!",
+        "en-US": "Build your own garden!"
+      }
+    },
+    {
+      "filter": "02-OyunTahtasi",
+      "keyword": {
+        "tr": "Birleştir & Büyüt",
+        "en-US": "Merge & Grow"
+      },
+      "title": {
+        "tr": "3 aynı öğeyi birleştir",
+        "en-US": "Merge 3 matching items"
+      }
+    },
+    {
+      "filter": "03-Magaza",
+      "keyword": {
+        "tr": "Mağaza",
+        "en-US": "Store"
+      },
+      "title": {
+        "tr": "Enerji ve altın satın al",
+        "en-US": "Buy energy and gold"
+      }
+    },
+    {
+      "filter": "04-Ayarlar",
+      "keyword": {
+        "tr": "Ayarlar",
+        "en-US": "Settings"
+      },
+      "title": {
+        "tr": "Game Center ile yarış",
+        "en-US": "Compete on Game Center"
+      }
+    },
+    {
+      "filter": "05-Siparisler",
+      "keyword": {
+        "tr": "Siparişler",
+        "en-US": "Orders"
+      },
+      "title": {
+        "tr": "Siparişleri tamamla, altın kazan",
+        "en-US": "Complete orders, earn gold"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+submit_for_review false
+automatic_release false
+force true
+app_identifier "com.kutican.bahcebirlestir"
+screenshots_path "./fastlane/screenshots"
+metadata_path "./fastlane/metadata"
